@@ -1,0 +1,79 @@
+# Default values for parking-saint-jean
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+front:
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: latest
+    pullPolicy: Always
+  annotations:
+
+back:
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: latest
+    pullPolicy: Always
+  database:
+    host: parking-saint-jean-mariadb
+    name: parking-saint-jean
+    user: root
+    password: root
+  annotations:
+
+etl:
+  image:
+    repository: nginx
+    tag: latest
+    pullPolicy: Always
+  database:
+    host: parking-saint-jean-mariadb
+    name: parking-saint-jean
+    user: root
+    password: root
+
+mariadb:
+  auth:
+    rootPassword: root #TODO use existingSecret instead
+    database: parking-saint-jean
+  initdbScripts:
+    create_table_parking.sql: |
+      CREATE TABLE parking(
+        id VARCHAR(20),
+        name VARCHAR(255),
+        position POINT NOT NULL,
+        total_spots INT,
+        PRIMARY KEY(id),
+      );
+    create_table_snapshot.sql: |
+      CREATE TABLE snapshot (
+        id INT NOT NULL AUTOINCREMENT,
+        parking_id VARCHAR(20),
+        datetime DATETIME,
+        free_spots INT,
+        PRIMARY KEY(id),
+        INDEX(parking_id),
+        INDEX(datetime)
+      );
+    # TODO
+    #create_view_min_free_spots.sql: |
+    #  CREATE VIEW min_free_spots
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  className: nginx
+  host: parking.loicgombeaud.com
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      gzip on;
+      gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;

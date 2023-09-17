@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "parking-saint-jean.fullname" . }}-etl
+  labels:
+    {{- include "parking-saint-jean.labels" . | nindent 4 }}
+spec:
+  schedule: "0 4 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: etl
+            image: "{{ .Values.etl.image.repository }}:{{ .Values.etl.image.tag }}"
+            imagePullPolicy: {{ .Values.etl.image.pullPolicy }}
+            env:
+            {{- with .Values.etl.database }}
+            - name: DB_HOST
+              value: {{ .host }}
+            - name: DB_NAME
+              value: {{ .name }}
+            - name: DB_USER
+              value: {{ .user }}
+            - name: DB_PASSWORD
+              value: {{ .password }}
+            {{- end }}
+          restartPolicy: OnFailure

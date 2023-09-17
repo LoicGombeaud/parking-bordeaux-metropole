@@ -1,0 +1,9 @@
+apiVersion: v2
+name: parking-saint-jean
+description: "Parking vélo Bordeaux Saint-Jean"
+type: application
+version: 0.1.0
+dependencies:
+- name: mariadb
+  version: 11.4.x
+  repository: https://charts.bitnami.com/bitnami
