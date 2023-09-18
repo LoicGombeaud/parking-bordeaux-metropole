@@ -5,7 +5,8 @@ metadata:
   labels:
     {{- include "parking-saint-jean.labels" . | nindent 4 }}
 spec:
-  schedule: "0 4 * * *"
+  schedule: {{ .Values.etl.schedule }}
+  timeZone: {{ .Values.etl.timeZone }}
   jobTemplate:
     spec:
       template:
@@ -25,4 +26,7 @@ spec:
             - name: DB_PASSWORD
               value: {{ .password }}
             {{- end }}
+            envFrom:
+            - secretRef:
+                name: {{ include "parking-saint-jean.fullname" . }}
           restartPolicy: OnFailure

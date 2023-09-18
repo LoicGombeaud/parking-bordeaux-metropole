@@ -24,8 +24,10 @@ back:
   annotations:
 
 etl:
+  schedule: "* * * * *"
+  timeZone: Europe/paris
   image:
-    repository: nginx
+    repository: ghcr.io/parking-saint-jean/etl
     tag: latest
     pullPolicy: Always
   database:
