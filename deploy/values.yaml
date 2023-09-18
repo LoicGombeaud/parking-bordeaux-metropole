@@ -27,7 +27,7 @@ etl:
   schedule: "* * * * *"
   timeZone: Europe/Paris
   image:
-    repository: ghcr.io/parking-saint-jean/etl
+    repository: ghcr.io/loicgombeaud/parking-saint-jean/etl
     tag: latest
     pullPolicy: Always
   database:
