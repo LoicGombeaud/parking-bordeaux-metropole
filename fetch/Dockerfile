@@ -14,6 +14,6 @@ RUN wget https://r.mariadb.com/downloads/mariadb_repo_setup \
 ADD requirements.txt .
 RUN pip install -r requirements.txt
 
-ADD etl.py etl.py
+ADD fetch.py fetch.py
 
-CMD ["python3", "etl.py"]
+CMD ["python3", "fetch.py"]

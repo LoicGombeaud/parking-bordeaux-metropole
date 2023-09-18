@@ -23,11 +23,11 @@ back:
     password: root
   annotations:
 
-etl:
+fetch:
   schedule: "* * * * *"
   timeZone: Europe/Paris
   image:
-    repository: ghcr.io/loicgombeaud/parking-saint-jean/etl
+    repository: ghcr.io/loicgombeaud/parking-saint-jean/fetch
     tag: latest
     pullPolicy: Always
   database:

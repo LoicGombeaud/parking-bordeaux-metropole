@@ -1,22 +1,22 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "parking-saint-jean.fullname" . }}-etl
+  name: {{ include "parking-saint-jean.fullname" . }}-fetch
   labels:
     {{- include "parking-saint-jean.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.etl.schedule | quote }}
-  timeZone: {{ .Values.etl.timeZone }}
+  schedule: {{ .Values.fetch.schedule | quote }}
+  timeZone: {{ .Values.fetch.timeZone }}
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: etl
-            image: "{{ .Values.etl.image.repository }}:{{ .Values.etl.image.tag }}"
-            imagePullPolicy: {{ .Values.etl.image.pullPolicy }}
+          - name: fetch
+            image: "{{ .Values.fetch.image.repository }}:{{ .Values.fetch.image.tag }}"
+            imagePullPolicy: {{ .Values.fetch.image.pullPolicy }}
             env:
-            {{- with .Values.etl.database }}
+            {{- with .Values.fetch.database }}
             - name: DB_HOST
               value: {{ .host }}
             - name: DB_NAME
@@ -28,5 +28,5 @@ spec:
             {{- end }}
             envFrom:
             - secretRef:
-                name: {{ include "parking-saint-jean.fullname" . }}-etl
+                name: {{ include "parking-saint-jean.fullname" . }}-fetch
           restartPolicy: OnFailure

@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  OPENDATA_KEY: WjRCRlcxRkMwQg==
+kind: Secret
+metadata:
+  name: parking-saint-jean-fetch
+  namespace: parking-saint-jean
+type: Opaque
