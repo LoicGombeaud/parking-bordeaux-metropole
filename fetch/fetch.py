@@ -1,14 +1,8 @@
 import argparse
 import json
 import mariadb
-import numpy
 import os
 import requests
-from datetime import date
-from datetime import datetime
-from datetime import time
-from datetime import timedelta
-from dateutil import parser
 
 
 # Parse input arguments

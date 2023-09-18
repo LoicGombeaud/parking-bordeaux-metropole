@@ -1,4 +1,2 @@
-requests
 mariadb
-numpy
-python-dateutil
+requests
