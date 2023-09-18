@@ -47,15 +47,14 @@ mariadb:
         total_spots INT,
         PRIMARY KEY(id),
       );
-    create_table_snapshot.sql: |
-      CREATE TABLE snapshot (
-        id INT NOT NULL AUTOINCREMENT,
+    create_table_parking_data.sql: |
+      CREATE TABLE parking_data(
         parking_id VARCHAR(20),
-        datetime DATETIME,
+        mdate DATETIME,
         free_spots INT,
-        PRIMARY KEY(id),
         INDEX(parking_id),
-        INDEX(datetime)
+        INDEX(mdate),
+        UNIQUE(parking_id, mdate)
       );
     # TODO
     #create_view_min_free_spots.sql: |
