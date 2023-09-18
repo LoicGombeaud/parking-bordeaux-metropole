@@ -28,5 +28,5 @@ spec:
             {{- end }}
             envFrom:
             - secretRef:
-                name: {{ include "parking-saint-jean.fullname" . }}
+                name: {{ include "parking-saint-jean.fullname" . }}-etl
           restartPolicy: OnFailure
