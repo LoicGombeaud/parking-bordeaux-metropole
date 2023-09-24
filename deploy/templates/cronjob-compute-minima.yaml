@@ -26,7 +26,4 @@ spec:
             - name: DB_PASSWORD
               value: {{ .password }}
             {{- end }}
-            envFrom:
-            - secretRef:
-                name: {{ include "parking-bordeaux-metropole.fullname" . }}-compute-minima
           restartPolicy: OnFailure
