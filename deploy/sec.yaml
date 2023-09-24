@@ -3,6 +3,6 @@ data:
   OPENDATA_KEY: WjRCRlcxRkMwQg==
 kind: Secret
 metadata:
-  name: parking-saint-jean-fetch
-  namespace: parking-saint-jean
+  name: parking-bordeaux-metropole-fetch
+  namespace: parking-bordeaux-metropole
 type: Opaque

@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "parking-saint-jean.fullname" . }}-compute-minima
+  name: {{ include "parking-bordeaux-metropole.fullname" . }}-compute-minima
   labels:
-    {{- include "parking-saint-jean.labels" . | nindent 4 }}
+    {{- include "parking-bordeaux-metropole.labels" . | nindent 4 }}
 spec:
   schedule: {{ .Values.compute-minima.schedule | quote }}
   timeZone: {{ .Values.compute-minima.timeZone }}
@@ -28,5 +28,5 @@ spec:
             {{- end }}
             envFrom:
             - secretRef:
-                name: {{ include "parking-saint-jean.fullname" . }}-compute-minima
+                name: {{ include "parking-bordeaux-metropole.fullname" . }}-compute-minima
           restartPolicy: OnFailure

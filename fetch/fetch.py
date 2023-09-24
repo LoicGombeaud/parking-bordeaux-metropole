@@ -9,10 +9,10 @@ import requests
 parser = argparse.ArgumentParser()
 parser.add_argument('--db-host',
                     default=os.getenv('DB_HOST',
-                                      default='parking-saint-jean-mariadb'))
+                                      default='parking-bordeaux-metropole-mariadb'))
 parser.add_argument('--db-name',
                     default=os.getenv('DB_NAME',
-                                      default='parking-saint-jean'))
+                                      default='parking-bordeaux-metropole'))
 parser.add_argument('--db-user',
                     default=os.getenv('DB_USER'))
 parser.add_argument('--db-password',

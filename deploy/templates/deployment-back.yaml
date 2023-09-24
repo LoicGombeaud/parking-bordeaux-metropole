@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "parking-saint-jean.fullname" . }}-back
+  name: {{ include "parking-bordeaux-metropole.fullname" . }}-back
   labels:
-    {{- include "parking-saint-jean.labels" . | nindent 4 }}
+    {{- include "parking-bordeaux-metropole.labels" . | nindent 4 }}
     component: back
   {{- with .Values.back.annotations }}
   annotations:
@@ -14,12 +14,12 @@ spec:
   selector:
   selector:
     matchLabels:
-      {{- include "parking-saint-jean.selectorLabels" . | nindent 6 }}
+      {{- include "parking-bordeaux-metropole.selectorLabels" . | nindent 6 }}
       component: back
   template:
     metadata:
       labels:
-        {{- include "parking-saint-jean.selectorLabels" . | nindent 8 }}
+        {{- include "parking-bordeaux-metropole.selectorLabels" . | nindent 8 }}
         component: back
     spec:
       containers:

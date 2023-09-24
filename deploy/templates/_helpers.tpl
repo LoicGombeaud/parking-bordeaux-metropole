@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "parking-saint-jean.name" -}}
+{{- define "parking-bordeaux-metropole.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "parking-saint-jean.fullname" -}}
+{{- define "parking-bordeaux-metropole.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "parking-saint-jean.chart" -}}
+{{- define "parking-bordeaux-metropole.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "parking-saint-jean.labels" -}}
-helm.sh/chart: {{ include "parking-saint-jean.chart" . }}
-{{ include "parking-saint-jean.selectorLabels" . }}
+{{- define "parking-bordeaux-metropole.labels" -}}
+helm.sh/chart: {{ include "parking-bordeaux-metropole.chart" . }}
+{{ include "parking-bordeaux-metropole.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "parking-saint-jean.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "parking-saint-jean.name" . }}
+{{- define "parking-bordeaux-metropole.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "parking-bordeaux-metropole.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "parking-saint-jean.serviceAccountName" -}}
+{{- define "parking-bordeaux-metropole.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "parking-saint-jean.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "parking-bordeaux-metropole.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

@@ -1,5 +1,5 @@
 apiVersion: v2
-name: parking-saint-jean
+name: parking-bordeaux-metropole
 description: "Parking vélo Bordeaux Saint-Jean"
 type: application
 version: 0.1.0

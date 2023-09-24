@@ -1,4 +1,4 @@
-# Default values for parking-saint-jean
+# Default values for parking-bordeaux-metropole
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -17,8 +17,8 @@ back:
     tag: latest
     pullPolicy: Always
   database:
-    host: parking-saint-jean-mariadb
-    name: parking-saint-jean
+    host: parking-bordeaux-metropole-mariadb
+    name: parking-bordeaux-metropole
     user: root
     password: root
   annotations:
@@ -27,12 +27,12 @@ fetch:
   schedule: "* * * * *"
   timeZone: Europe/Paris
   image:
-    repository: ghcr.io/loicgombeaud/parking-saint-jean/fetch
+    repository: ghcr.io/loicgombeaud/parking-bordeaux-metropole/fetch
     tag: latest
     pullPolicy: Always
   database:
-    host: parking-saint-jean-mariadb
-    name: parking-saint-jean
+    host: parking-bordeaux-metropole-mariadb
+    name: parking-bordeaux-metropole
     user: root
     password: root
 
@@ -40,19 +40,19 @@ compute_minima:
   schedule: "10 0 * * *"
   timeZone: Europe/Paris
   image:
-    repository: ghcr.io/loicgombeaud/parking-saint-jean/compute_minima
+    repository: ghcr.io/loicgombeaud/parking-bordeaux-metropole/compute_minima
     tag: latest
     pullPolicy: Always
   database:
-    host: parking-saint-jean-mariadb
-    name: parking-saint-jean
+    host: parking-bordeaux-metropole-mariadb
+    name: parking-bordeaux-metropole
     user: root
     password: root
 
 mariadb:
   auth:
     rootPassword: root #TODO use existingSecret instead
-    database: parking-saint-jean
+    database: parking-bordeaux-metropole
   initdbScripts:
     create_table_parking.sql: |
       CREATE TABLE parking(

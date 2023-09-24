@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "parking-saint-jean.fullname" . }}-fetch
+  name: {{ include "parking-bordeaux-metropole.fullname" . }}-fetch
   labels:
-    {{- include "parking-saint-jean.labels" . | nindent 4 }}
+    {{- include "parking-bordeaux-metropole.labels" . | nindent 4 }}
 spec:
   schedule: {{ .Values.fetch.schedule | quote }}
   timeZone: {{ .Values.fetch.timeZone }}
@@ -28,5 +28,5 @@ spec:
             {{- end }}
             envFrom:
             - secretRef:
-                name: {{ include "parking-saint-jean.fullname" . }}-fetch
+                name: {{ include "parking-bordeaux-metropole.fullname" . }}-fetch
           restartPolicy: OnFailure
