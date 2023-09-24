@@ -5,18 +5,18 @@ metadata:
   labels:
     {{- include "parking-bordeaux-metropole.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.compute-minima.schedule | quote }}
-  timeZone: {{ .Values.compute-minima.timeZone }}
+  schedule: {{ .Values.computeMinima.schedule | quote }}
+  timeZone: {{ .Values.computeMinima.timeZone }}
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: compute-minima
-            image: "{{ .Values.compute-minima.image.repository }}:{{ .Values.compute-minima.image.tag }}"
-            imagePullPolicy: {{ .Values.compute-minima.image.pullPolicy }}
+            image: "{{ .Values.computeMinima.image.repository }}:{{ .Values.computeMinima.image.tag }}"
+            imagePullPolicy: {{ .Values.computeMinima.image.pullPolicy }}
             env:
-            {{- with .Values.compute-minima.database }}
+            {{- with .Values.computeMinima.database }}
             - name: DB_HOST
               value: {{ .host }}
             - name: DB_NAME
