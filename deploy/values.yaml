@@ -58,9 +58,21 @@ mariadb:
         INDEX(mdate),
         UNIQUE(parking_id, mdate)
       );
-    # TODO
-    #create_view_min_free_spots.sql: |
-    #  CREATE VIEW min_free_spots
+    create_table_minima_hourly: |
+      CREATE TABLE minima_hourly(
+        parking_id VARCHAR(20),
+        day DATE,
+        hour INT,
+        free_spots INT,
+        UNIQUE(parking_id, day, hour)
+      );
+    create_table_minima_daily: |
+      CREATE TABLE minima_daily(
+        parking_id VARCHAR(20),
+        day DATE,
+        free_spots INT,
+        UNIQUE(parking_id, day)
+      );
 
 nameOverride: ""
 fullnameOverride: ""
