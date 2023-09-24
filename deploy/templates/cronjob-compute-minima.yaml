@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "parking-saint-jean.fullname" . }}-compute-minima
+  labels:
+    {{- include "parking-saint-jean.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.compute-minima.schedule | quote }}
+  timeZone: {{ .Values.compute-minima.timeZone }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: compute-minima
+            image: "{{ .Values.compute-minima.image.repository }}:{{ .Values.compute-minima.image.tag }}"
+            imagePullPolicy: {{ .Values.compute-minima.image.pullPolicy }}
+            env:
+            {{- with .Values.compute-minima.database }}
+            - name: DB_HOST
+              value: {{ .host }}
+            - name: DB_NAME
+              value: {{ .name }}
+            - name: DB_USER
+              value: {{ .user }}
+            - name: DB_PASSWORD
+              value: {{ .password }}
+            {{- end }}
+            envFrom:
+            - secretRef:
+                name: {{ include "parking-saint-jean.fullname" . }}-compute-minima
+          restartPolicy: OnFailure

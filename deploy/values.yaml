@@ -36,6 +36,19 @@ fetch:
     user: root
     password: root
 
+compute_minima:
+  schedule: "10 0 * * *"
+  timeZone: Europe/Paris
+  image:
+    repository: ghcr.io/loicgombeaud/parking-saint-jean/compute_minima
+    tag: latest
+    pullPolicy: Always
+  database:
+    host: parking-saint-jean-mariadb
+    name: parking-saint-jean
+    user: root
+    password: root
+
 mariadb:
   auth:
     rootPassword: root #TODO use existingSecret instead
