@@ -29,11 +29,11 @@ connection = mariadb.connect(host=args.db_host,
                              autocommit=True)
 cursor = connection.cursor()
 
-# Retrieve Saint-Jean parkings
-saint_jean_parking_ids = []
+# Retrieve all parkings
+parking_ids = []
 cursor.execute('SELECT id FROM parking')
-for saint_jean_parking in cursor.fetchall():
-    saint_jean_parking_ids.append(saint_jean_parking[0])
+for parking in cursor.fetchall():
+    parking_ids.append(parking[0])
 
 
 # Compute hourly and daily minima for each parking
@@ -42,7 +42,7 @@ print('Computing daily and hourly minima for %s' % day_to_compute)
 print()
 minima_hourly = {}
 minima_daily = {}
-for parking_id in saint_jean_parking_ids:
+for parking_id in parking_ids:
     print('Parking ID: %s' % parking_id)
     minima_hourly[parking_id] = {}
     for hour_to_compute in range(0, 24):
@@ -55,14 +55,15 @@ for parking_id in saint_jean_parking_ids:
             minima_hourly[parking_id][hour_to_compute] = result[0]
     print(f'{minima_hourly[parking_id]=}')
     print()
-    minima_daily[parking_id] = min(minima_hourly[parking_id].values())
+    if minima_hourly[parking_id]:
+        minima_daily[parking_id] = min(minima_hourly[parking_id].values())
 
 print(f'{minima_daily=}')
 print()
 
 # Write minima to database
 print('Writing minima to database...')
-for parking_id in saint_jean_parking_ids:
+for parking_id in parking_ids:
     for hour in minima_hourly[parking_id]:
         cursor.execute('INSERT INTO minima_hourly VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE free_spots=?',
                        (parking_id,
@@ -70,11 +71,12 @@ for parking_id in saint_jean_parking_ids:
                         hour,
                         minima_hourly[parking_id][hour],
                         minima_hourly[parking_id][hour]))
-    cursor.execute('INSERT INTO minima_daily VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE free_spots=?',
-                   (parking_id,
-                    day_to_compute,
-                    minima_daily[parking_id],
-                    minima_daily[parking_id]))
+    if parking_id in minima_daily:
+        cursor.execute('INSERT INTO minima_daily VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE free_spots=?',
+                       (parking_id,
+                        day_to_compute,
+                        minima_daily[parking_id],
+                        minima_daily[parking_id]))
 print('Success!')
 
 # Close connection to the database

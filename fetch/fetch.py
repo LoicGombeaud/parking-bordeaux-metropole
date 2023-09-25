@@ -32,12 +32,6 @@ cursor = connection.cursor()
 # Define URL from which to retrieve parking data
 url = 'https://data.bordeaux-metropole.fr/geojson?key=%s&typename=st_park_p' % args.opendata_key
 
-# Retrieve Saint-Jean parkings
-saint_jean_parking_ids = []
-cursor.execute('SELECT id FROM parking')
-for saint_jean_parking in cursor.fetchall():
-    saint_jean_parking_ids.append(saint_jean_parking[0])
-
 # Load free spots data into the database
 print('Downloading measurement data...')
 r = requests.get(url)
@@ -48,22 +42,33 @@ print('Done')
 print('Loading measurement data into the DB...')
 with open('parking.json', 'r') as parking_file:
     parkings = json.load(parking_file)['features']
-    saint_jean_parkings = filter(lambda p: p['properties']['ident'] in saint_jean_parking_ids,
-                                 parkings)
-    for parking in saint_jean_parkings:
-        print(parking['properties']['ident'])
-        print(parking['properties']['nom'])
-        print(parking['properties']['mdate'])
-        print(parking['properties']['libres'])
-        print()
+    for parking in parkings:
         parking_id = parking['properties']['ident']
+        name = parking['properties']['nom']
+        coordinates = parking['geometry']['coordinates']
         mdate = parking['properties']['mdate'].split('+')[0]
+        total_spots = parking['properties']['total']
         free_spots = parking['properties']['libres']
-        cursor.execute('INSERT IGNORE INTO parking_data (parking_id, mdate, free_spots) VALUES (?, ?, ?)',
-                       (parking_id,
-                        mdate,
-                        free_spots))
-connection.commit()
+        print(f'{parking_id=}')
+        print(f'{name=}')
+        print(f'{coordinates=}')
+        print(f'{mdate=}')
+        print(f'{total_spots=}')
+        print(f'{free_spots=}')
+        print()
+        if free_spots is not None:
+            # Save parking info
+            cursor.execute('INSERT IGNORE INTO parking VALUES (?, ?, POINT(?, ?), ?)',
+                           (parking_id,
+                            name,
+                            coordinates[0],
+                            coordinates[1],
+                            total_spots
+                            ))
+            cursor.execute('INSERT IGNORE INTO parking_data (parking_id, mdate, free_spots) VALUES (?, ?, ?)',
+                           (parking_id,
+                            mdate,
+                            free_spots))
 
 # Close connection to the database
 cursor.close()
