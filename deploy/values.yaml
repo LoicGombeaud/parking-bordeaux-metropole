@@ -37,7 +37,7 @@ fetch:
     password: root
 
 computeMinima:
-  schedule: "10 0 * * *"
+  schedule: "10 2 * * *"
   timeZone: Europe/Paris
   image:
     repository: ghcr.io/loicgombeaud/parking-bordeaux-metropole/compute-minima
